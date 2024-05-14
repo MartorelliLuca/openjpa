@@ -40,6 +40,16 @@
     <properties>
         <java.class.version>1.8</java.class.version>
         <java.testclass.version>1.8</java.testclass.version>
+        <!--SonarCloud dependencies-->
+        <sonar.organization>martorelliluca</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <!-- JaCoCo additions -->
+        <sonar.coverage.jacoco.xmlReportPaths>../tests/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+        <!-- Mockito additions -->
+        <mockito.version>3.12.4</mockito.version>
+        <doclint>none</doclint>
+
+
 
         <doclint>none</doclint>
 
@@ -104,7 +114,7 @@
 
         <jmock.version>2.9.0</jmock.version>
         <dbcp2.version>2.8.0</dbcp2.version>
-	<pool2.version>2.9.0</pool2.version>
+	    <pool2.version>2.9.0</pool2.version>
     </properties>
 
     <licenses>
@@ -181,18 +191,19 @@
         <module>openjpa-persistence-locking</module>
         <module>openjpa-xmlstore</module>
         <module>openjpa-slice</module>
+
 <!--
         <module>openjpa-jest</module>
-        <module>openjpa-kubernetes</module> 
+        <module>openjpa-kubernetes</module>
        <module>openjpa</module>
         <module>openjpa-project</module>
         <module>openjpa-examples</module>
-        <module>openjpa-integration</module> 
+        <module>openjpa-integration</module>
        <module>openjpa-all</module>
        <module>openjpa-tools</module>
         <module>openjpa-features</module>
         <module>openjpa-junit5</module>
- -->  
+ -->
   </modules>
 
     <profiles>
@@ -1746,6 +1757,33 @@
             </repositories>
         </profile>
 
+        <profile>
+            <id>JaCoCoCoverage</id>
+            <activation>
+                <property>
+                    <name>!skipJaCoCoCoverage</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>0.8.8</version>
+                        <executions>
+                            <execution>
+                                <id>prepare-agent</id>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+
     </profiles>
 
     <!-- default versions for dependencies that child modules may include -->
@@ -1906,6 +1944,16 @@
                 <artifactId>annotations</artifactId>
                 <version>3.0.1</version>
             </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-inline</artifactId>
+                <version>${mockito.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -1919,6 +1967,17 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-dbcp2</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-inline</artifactId>
+            <version>${mockito.version}</version>
         </dependency>
     </dependencies>
 
@@ -1969,14 +2028,12 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven.surefire.version}</version>
-                    <configuration>
+                    <!--configuration>
                         <argLine>${surefire.jvm.args}</argLine>
                         <redirectTestOutputToFile>true</redirectTestOutputToFile>
                         <trimStackTrace>false</trimStackTrace>
                         <useSystemClassLoader>true</useSystemClassLoader>
                         <excludes>
-                            <!-- exclude classes that include a $; inner classes
-                                 are not test cases per OpenJPA standards -->
                             <exclude>org/apache/openjpa/**/*$*.class</exclude>
                         </excludes>
                     <systemProperties>
@@ -2033,7 +2090,7 @@
                             <value>${tests.openjpa.driverDataSource}</value>
                         </property>
                     </systemProperties>
-                    </configuration>
+                    </configuration-->
                 </plugin>
                 <plugin>
                     <groupId>io.fabric8</groupId>
