@@ -107,7 +107,7 @@
                 </configuration>
             </plugin>
 
-            <!-- Extract the common test support files from o-p-j-tests.jar -->
+            <!-- Extract the common test support files from o-p-j-tests.jar
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -132,7 +132,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

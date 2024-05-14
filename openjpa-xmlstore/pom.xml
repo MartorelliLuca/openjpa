@@ -58,7 +58,7 @@
 
     <build>
         <plugins>
-            <!-- Extract the common test support files from o-p-j-tests.jar -->
+            <!-- Extract the common test support files from o-p-j-tests.jar
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -83,7 +83,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
 
             <!-- new way of using openjpa-maven-plugin to enhance classes -->
             <plugin>
