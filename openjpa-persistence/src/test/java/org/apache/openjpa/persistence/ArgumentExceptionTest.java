@@ -14,4 +14,5 @@ public class ArgumentExceptionTest{
         ArgumentException argumentException = new ArgumentException("THIS IS A DUMMY TEST", null, null, true);
         Assert.assertEquals(4, argumentException.getType());
     }
+    //later on change this dummy test
 }
