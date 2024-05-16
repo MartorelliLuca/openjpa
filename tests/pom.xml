@@ -63,11 +63,6 @@
         </dependency>
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>openjpa-persistence</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.parent.groupId}</groupId>
             <artifactId>openjpa-persistence-jdbc</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
@@ -84,6 +79,11 @@
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
             <artifactId>openjpa-fetch-statistics</artifactId>
+            <version>3.2.3-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.openjpa</groupId>
+            <artifactId>openjpa-persistence</artifactId>
             <version>3.2.3-SNAPSHOT</version>
         </dependency>
         <dependency>

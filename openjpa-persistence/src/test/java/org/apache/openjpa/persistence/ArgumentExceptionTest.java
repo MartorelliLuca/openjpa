@@ -10,8 +10,8 @@ public class ArgumentExceptionTest{
         Assert.assertTrue(argumentException.isFatal());
     }
     @Test
-    public void testIsFatal2() {
-        ArgumentException argumentException = new ArgumentException("THIS IS A DUMMY TEST", null, null, false);
-        Assert.assertFalse(argumentException.isFatal());
+    public void testIsUser() {
+        ArgumentException argumentException = new ArgumentException("THIS IS A DUMMY TEST", null, null, true);
+        Assert.assertEquals(4, argumentException.getType());
     }
 }
