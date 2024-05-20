@@ -105,7 +105,7 @@
 
         <maven.javadoc.version>3.0.1</maven.javadoc.version>
         <javadoc.additionalparam />
-        <maven.surefire.version>3.0.0-M7</maven.surefire.version>
+        <maven.surefire.version>3.2.5</maven.surefire.version>
 
         <xbean.version>4.20</xbean.version>
         <bval.version>1.1.2</bval.version>
@@ -186,7 +186,7 @@
         <module>openjpa-lib</module>
         <module>openjpa-kernel</module>
         <module>openjpa-jdbc</module>
-        <module>openjpa-persistence</module>
+        <!--module>openjpa-persistence</module-->
         <module>openjpa-persistence-jdbc</module>
         <module>openjpa-persistence-locking</module>
         <module>openjpa-xmlstore</module>
@@ -2009,6 +2009,7 @@
                     <configuration>
                         <source>${compile.class.source}</source>
                         <target>${compile.class.target}</target>
+                        <release>11</release>
                         <encoding>${project.build.sourceEncoding}</encoding>
                     </configuration>
                 </plugin>
