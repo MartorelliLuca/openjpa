@@ -2,7 +2,7 @@ name: Badua-Coverage
 on:
   push:
     branches:
-      - main
+      - 3.2.x-Reduced_And_No_Test_Version
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
