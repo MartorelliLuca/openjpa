@@ -39,5 +39,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Badua_Report
-          path: openjpa-persistence/target/badua.xml
+          path: target/badua.xml
           if-no-files-found: error
