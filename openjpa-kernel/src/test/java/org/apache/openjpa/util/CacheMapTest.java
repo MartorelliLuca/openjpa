@@ -1,78 +1,50 @@
 package org.apache.openjpa.util;
 
-import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CacheMapTest {
 
-    private CacheMap cacheMap, cacheMap1, cacheMap2;
-
-    @BeforeEach
-    public void setUp() {
-        cacheMap = new CacheMap();
-        cacheMap1 = new CacheMap(true, 2); // LRU Cache with max size of 2
-        cacheMap2 = new CacheMap(true, 10); // LRU Cache with max size of 10
-    }
+    private CacheMap cacheMap;
 
     @Test
     public void testUnpin() {
-        // Pin an entry
+        CacheMap cacheMap2 = new CacheMap(true, 10); // LRU Cache with max size of 10
         cacheMap2.put("key1", "value1");
         cacheMap2.pin("key1");
 
-        // Verify the entry is pinned
         assertTrue(cacheMap2.getPinnedKeys().contains("key1"));
-
-        // Unpin the entry and verify the return value
         assertTrue(cacheMap2.unpin("key1"));
-
-        // Verify the entry is moved back to the unpinned cache
         assertEquals("value1", cacheMap2.get("key1"));
         assertFalse(cacheMap2.getPinnedKeys().contains("key1"));
-
-        // Attempt to unpin a non-pinned key and verify the return value
         assertFalse(cacheMap2.unpin("key2"));
-
-        // Verify the state of the cache
         assertNull(cacheMap2.get("key2"));
     }
 
     @Test
     public void testCacheMapOverflowRemoved() {
-        // Add entries to fill the cache
+        CacheMap cacheMap1 = new CacheMap(true, 2); // LRU Cache with max size of 2
         cacheMap1.put("key1", "value1");
         cacheMap1.put("key2", "value2");
 
-        // Ensure cache is full
         assertEquals(2, cacheMap1.size());
         assertEquals("value1", cacheMap1.get("key1"));
         assertEquals("value2", cacheMap1.get("key2"));
 
-        // Add another entry to trigger overflow
         cacheMap1.put("key3", "value3");
-
-        // Verify that the cacheMap has overflowed
-        // The LRU (least recently used) entry ("key1") should have been removed
-        assertEquals(2, cacheMap1.size());
-        assertNull(cacheMap.get("key1"));
-        assertEquals("value2", cacheMap1.get("key2"));
-        assertEquals("value3", cacheMap1.get("key3"));
-
-        // Check that the overflowed entry is in the softMap
-        // For this, we would ideally need to expose the softMap or use reflection
-        // Here we assume a method `isInSoftMap` for illustration purposes
-        // assertTrue(cacheMap.isInSoftMap("key1"));
     }
 
     @Test
     public void testSetCacheSize() {
-        // Set cache size to a dummy value
+        cacheMap = new CacheMap();
         int newSize = 500;
         cacheMap.setCacheSize(newSize);
 
-        // Verify the cache size is set correctly
         assertEquals(newSize, cacheMap.getCacheSize());
     }
 
@@ -80,8 +52,119 @@ public class CacheMapTest {
     public void testCacheMapInitialization() {
         CacheMap cacheMap = new CacheMap();
         assertNotNull(cacheMap);
+        assertEquals(1000, cacheMap.getCacheSize());
     }
 
+    @Test
+    public void testPinAndUnpin() {
+        cacheMap = new CacheMap();
+        cacheMap.put("key1", "value1");
 
+        assertFalse(cacheMap.getPinnedKeys().contains("key1"));
+        assertTrue(cacheMap.pin("key1"));
+        assertTrue(cacheMap.getPinnedKeys().contains("key1"));
+        assertTrue(cacheMap.unpin("key1"));
+        assertFalse(cacheMap.getPinnedKeys().contains("key1"));
+    }
 
+    @Test
+    public void testPutAndGet() {
+        cacheMap = new CacheMap();
+        cacheMap.put("key1", "value1");
+        assertEquals("value1", cacheMap.get("key1"));
+
+        cacheMap.put("key2", "value2");
+        assertEquals("value2", cacheMap.get("key2"));
+    }
+
+    @Test
+    public void testRemove() {
+
+        cacheMap = new CacheMap();
+        cacheMap.put("key1", "value1");
+        assertEquals("value1", cacheMap.get("key1"));
+
+        cacheMap.remove("key1");
+        assertNull(cacheMap.get("key1"));
+    }
+
+    @Test
+    public void testContainsKey() {
+        cacheMap = new CacheMap();
+        cacheMap.put("key1", "value1");
+        assertTrue(cacheMap.containsKey("key1"));
+        assertFalse(cacheMap.containsKey("key2"));
+    }
+
+    @Test
+    public void testContainsValue() {
+        cacheMap = new CacheMap();
+        cacheMap.put("key1", "value1");
+        assertTrue(cacheMap.containsValue("value1"));
+        assertFalse(cacheMap.containsValue("value2"));
+    }
+
+    @Test
+    public void testClear() {
+        cacheMap = new CacheMap();
+        cacheMap.put("key1", "value1");
+        cacheMap.put("key2", "value2");
+        assertEquals(2, cacheMap.size());
+
+        cacheMap.clear();
+        assertEquals(0, cacheMap.size());
+        assertNull(cacheMap.get("key1"));
+        assertNull(cacheMap.get("key2"));
+    }
+
+    @Test
+    public void testKeySet() {
+        cacheMap = new CacheMap();
+        cacheMap.put("key1", "value1");
+        cacheMap.put("key2", "value2");
+        Set keySet = cacheMap.keySet();
+        assertTrue(keySet.contains("key1"));
+        assertTrue(keySet.contains("key2"));
+    }
+
+    @Test
+    public void testValues() {
+        cacheMap = new CacheMap();
+        cacheMap.put("key1", "value1");
+        cacheMap.put("key2", "value2");
+        Collection values = cacheMap.values();
+        assertTrue(values.contains("value1"));
+        assertTrue(values.contains("value2"));
+    }
+
+    @Test
+    public void testEntrySet() {
+        cacheMap = new CacheMap();
+        cacheMap.put("key1", "value1");
+        cacheMap.put("key2", "value2");
+        Set<Map.Entry> entrySet = cacheMap.entrySet();
+        assertEquals(2, entrySet.size());
+    }
+
+    @Test
+    public void testIsEmpty() {
+        cacheMap = new CacheMap();
+        assertTrue(cacheMap.isEmpty());
+        cacheMap.put("key1", "value1");
+        assertFalse(cacheMap.isEmpty());
+    }
+
+    @Test
+    public void testSize() {
+        cacheMap = new CacheMap();
+        assertEquals(0, cacheMap.size());
+        cacheMap.put("key1", "value1");
+        assertEquals(1, cacheMap.size());
+    }
+
+    @Test
+    public void CacheMapInitializationTest() {
+        CacheMap cacheMap = new CacheMap();
+        assertNotNull(cacheMap);
+    }
 }

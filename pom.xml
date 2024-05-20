@@ -24,9 +24,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-      <groupId>org.apache</groupId>
-      <artifactId>apache</artifactId>
-      <version>23</version>
+        <groupId>org.apache</groupId>
+        <artifactId>apache</artifactId>
+        <version>23</version>
     </parent>
 
     <groupId>org.apache.openjpa</groupId>
@@ -114,7 +114,7 @@
 
         <jmock.version>2.9.0</jmock.version>
         <dbcp2.version>2.8.0</dbcp2.version>
-	    <pool2.version>2.9.0</pool2.version>
+        <pool2.version>2.9.0</pool2.version>
     </properties>
 
     <licenses>
@@ -169,28 +169,28 @@
     </mailingLists>
 
     <distributionManagement>
-      <site>
-        <id>people.apache.org</id>
+        <site>
+            <id>people.apache.org</id>
             <url>${site.deploy.url}</url>
-      </site>
+        </site>
     </distributionManagement>
 
     <scm>
         <connection>scm:git:https://gitbox.apache.org/repos/asf/openjpa.git</connection>
         <developerConnection>scm:git:https://gitbox.apache.org/repos/asf/openjpa.git</developerConnection>
         <url>https://gitbox.apache.org/repos/asf/openjpa.git</url>
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
 
     <modules>
-        <module>openjpa-lib</module>
         <module>openjpa-kernel</module>
+        <!--module>openjpa-lib</module>
         <module>openjpa-jdbc</module>
-        <!--module>openjpa-persistence</module-->
+        <module>openjpa-persistence</module>
         <module>openjpa-persistence-jdbc</module>
         <module>openjpa-persistence-locking</module>
         <module>openjpa-xmlstore</module>
-        <module>openjpa-slice</module>
+        <module>openjpa-slice</module-->
         <module>tests</module>
 
         <!--
@@ -205,7 +205,7 @@
                 <module>openjpa-features</module>
                 <module>openjpa-junit5</module>
          -->
-  </modules>
+    </modules>
 
     <profiles>
         <!-- ================ -->
@@ -402,19 +402,19 @@
             </properties>
             <build>
                 <plugins>
-                   <plugin>
-                       <groupId>org.apache.maven.plugins</groupId>
-                       <artifactId>maven-surefire-plugin</artifactId>
-                       <version>${maven.surefire.version}</version>
-                       <!--
-                       <configuration>
-                           <argLine>${surefire.jvm.args}</argLine>
-                           <includes>
-                               <include />
-                           </includes>
-                       </configuration>
-                       -->
-                   </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${maven.surefire.version}</version>
+                        <!--
+                        <configuration>
+                            <argLine>${surefire.jvm.args}</argLine>
+                            <includes>
+                                <include />
+                            </includes>
+                        </configuration>
+                        -->
+                    </plugin>
                 </plugins>
             </build>
         </profile>
@@ -432,9 +432,9 @@
             <id>test-derby</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
-            <property>
-                <name>test-derby</name>
-            </property>
+                <property>
+                    <name>test-derby</name>
+                </property>
             </activation>
             <dependencies>
                 <dependency>
@@ -1796,7 +1796,7 @@
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-pool2</artifactId>
-		<version>${pool2.version}</version>
+                <version>${pool2.version}</version>
             </dependency>
             <dependency>
                 <groupId>commons-logging</groupId>
@@ -1808,10 +1808,10 @@
                 <artifactId>serp</artifactId>
                 <version>1.15.1</version>
                 <exclusions>
-                  <exclusion>
-                    <groupId>junit</groupId>
-                    <artifactId>junit</artifactId>
-                  </exclusion>
+                    <exclusion>
+                        <groupId>junit</groupId>
+                        <artifactId>junit</artifactId>
+                    </exclusion>
                 </exclusions>
             </dependency>
             <dependency>
@@ -1904,14 +1904,14 @@
             </dependency>
 
             <dependency>
-              <groupId>io.fabric8</groupId>
-              <artifactId>kubernetes-client</artifactId>
-              <version>${kubernetes-client.version}</version>
+                <groupId>io.fabric8</groupId>
+                <artifactId>kubernetes-client</artifactId>
+                <version>${kubernetes-client.version}</version>
             </dependency>
             <dependency>
-              <groupId>io.fabric8</groupId>
-              <artifactId>kubernetes-server-mock</artifactId>
-              <version>${kubernetes-client.version}</version>
+                <groupId>io.fabric8</groupId>
+                <artifactId>kubernetes-server-mock</artifactId>
+                <version>${kubernetes-client.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -1935,7 +1935,7 @@
             </dependency>
             <dependency>
                 <groupId>org.jmock</groupId>
-                <artifactId>jmock-junit4</artifactId>
+                <artifactId>jmock-junit5</artifactId>
                 <version>${jmock.version}</version>
             </dependency>
             <dependency>
@@ -2221,7 +2221,7 @@
                             <configuration>
                                 <archive>
                                     <manifest>
-                                       <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                                        <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                                     </manifest>
                                     <manifestEntries>
                                         <Implementation-Build>${buildNumber}</Implementation-Build>
