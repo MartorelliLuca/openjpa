@@ -39,5 +39,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Badua_Report
-          path: target/badua.xml
+          path: bookkeeper-server/target/badua.xml
           if-no-files-found: error
