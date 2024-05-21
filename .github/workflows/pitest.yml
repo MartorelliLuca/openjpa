@@ -28,9 +28,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
         run: mvn clean verify -P Pitest
-      - name: Upload report
-        uses: actions/upload-artifact@v3
-        with:
-          name: index
-          path: bookkeeper-server/target/pit-reports
-          if-no-files-found: error
