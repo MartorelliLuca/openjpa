@@ -2040,6 +2040,7 @@
                         <trimStackTrace>false</trimStackTrace>
                         <useSystemClassLoader>true</useSystemClassLoader>
                         <excludes>
+
                             <exclude>org/apache/openjpa/**/*$*.class</exclude>
                         </excludes>
                     <systemProperties>

@@ -1,12 +1,13 @@
 package org.apache.openjpa.util;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
+
 
 public class CacheMapTest {
 
