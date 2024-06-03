@@ -309,7 +309,7 @@
                                 <param>org.apache.openjpa.util.CacheMap</param>
                             </targetClasses>
                             <targetTests>
-                                <param>org.apache.openjpa.util.CacheMapTest</param>
+                                <param>org.apache.openjpa.util.PutCacheMapTest</param>
                             </targetTests>
                             <avoidCallsTo>
                                 <avoidCallsTo>org.slf4j</avoidCallsTo>
