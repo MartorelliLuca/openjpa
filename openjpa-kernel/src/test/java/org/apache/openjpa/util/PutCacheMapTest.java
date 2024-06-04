@@ -22,10 +22,14 @@ public class PutCacheMapTest {
     private final KeyType stateOfKey;
     private final ValueType stateOfValue;
     private final Object existingValue;
+    private final boolean expectedNull;
+
+
 
     private enum KeyType {
         Null,
-        ValidObject,
+        NotExistedObject,
+        ExistedObject,
         InvalidObject
     }
 
@@ -39,21 +43,25 @@ public class PutCacheMapTest {
         this.stateOfKey = entriesTuple.stateOfKey();
         this.stateOfValue = entriesTuple.stateOfValue();
         this.existingValue = new Object();
+        this.expectedNull = entriesTuple.isNull();
     }
 
     @Parameterized.Parameters
     public static Collection<EntriesTuple> getReadInputTuples() {
         List<EntriesTuple> putEntriesList = new ArrayList<>();
 
-        putEntriesList.add(new EntriesTuple(KeyType.Null,           ValueType.ValidObject));            //case 1
-        putEntriesList.add(new EntriesTuple(KeyType.Null,           ValueType.Null));                   //case 2
-        putEntriesList.add(new EntriesTuple(KeyType.Null,           ValueType.InvalidObject));          //case 3
-        putEntriesList.add(new EntriesTuple(KeyType.ValidObject,    ValueType.ValidObject));            //case 4
-        putEntriesList.add(new EntriesTuple(KeyType.ValidObject,    ValueType.Null));                   //case 5
-        putEntriesList.add(new EntriesTuple(KeyType.ValidObject,    ValueType.InvalidObject));          //case 6
-        putEntriesList.add(new EntriesTuple(KeyType.InvalidObject,  ValueType.ValidObject));            //case 7
-        putEntriesList.add(new EntriesTuple(KeyType.InvalidObject,  ValueType.Null));                   //case 8
-        putEntriesList.add(new EntriesTuple(KeyType.InvalidObject,  ValueType.InvalidObject));          //case 9
+        putEntriesList.add(new EntriesTuple(KeyType.Null,                ValueType.ValidObject,   false));    //case 1
+        putEntriesList.add(new EntriesTuple(KeyType.Null,                ValueType.Null,          true));    //case 2
+        putEntriesList.add(new EntriesTuple(KeyType.Null,                ValueType.InvalidObject, true));    //case 3
+        putEntriesList.add(new EntriesTuple(KeyType.NotExistedObject,    ValueType.ValidObject,   false));   //case 4
+        putEntriesList.add(new EntriesTuple(KeyType.NotExistedObject,    ValueType.Null,          true));   //case 5
+        putEntriesList.add(new EntriesTuple(KeyType.NotExistedObject,    ValueType.InvalidObject, true));   //case 6
+        putEntriesList.add(new EntriesTuple(KeyType.InvalidObject,       ValueType.ValidObject,   true));    //case 7
+        putEntriesList.add(new EntriesTuple(KeyType.InvalidObject,       ValueType.Null,          true));    //case 8
+        putEntriesList.add(new EntriesTuple(KeyType.InvalidObject,       ValueType.InvalidObject, true));    //case 9
+        putEntriesList.add(new EntriesTuple(KeyType.ExistedObject,       ValueType.ValidObject,   false));   //case 10
+        putEntriesList.add(new EntriesTuple(KeyType.ExistedObject,       ValueType.Null,          true));   //case 11
+        putEntriesList.add(new EntriesTuple(KeyType.ExistedObject,       ValueType.InvalidObject, true));   //case 12
 
         return putEntriesList;
     }
@@ -61,10 +69,12 @@ public class PutCacheMapTest {
     private static final class EntriesTuple {
         private final KeyType keyType;
         private final ValueType valueType;
+        private final boolean nullValue;
 
-        private EntriesTuple(KeyType stateOfKey, ValueType stateOfValue) {
+        private EntriesTuple(KeyType stateOfKey, ValueType stateOfValue, boolean nullValue) {
             this.keyType = stateOfKey;
             this.valueType = stateOfValue;
+            this.nullValue = nullValue;
         }
 
         public KeyType stateOfKey() {
@@ -73,6 +83,9 @@ public class PutCacheMapTest {
 
         public ValueType stateOfValue() {
             return valueType;
+        }
+        public boolean isNull() {
+            return nullValue;
         }
     }
 
@@ -86,7 +99,10 @@ public class PutCacheMapTest {
             case InvalidObject:
                 this.key = new InvalidObject();
                 break;
-            case ValidObject:
+            case NotExistedObject:
+                this.key = new Object();
+                break;
+            case ExistedObject:
                 this.key = new Object();
                 cacheMap.put(this.key, this.existingValue);
                 break;
@@ -106,22 +122,37 @@ public class PutCacheMapTest {
 
     @Test
     public void testPut() {
+        System.out.println("\n______________________________________________");
+        System.out.println("KeyState: " + this.stateOfKey);
+        System.out.println("ValueState: " + this.stateOfValue);
         System.out.println("Key: " + this.key);
-        System.out.println("Value: " + this.value);
 
         Object retVal = this.cacheMap.put(this.key, this.value);
 
         System.out.println("Return Value: " + retVal);
+        System.out.println("Value:        " + this.value);
         System.out.println("Cached Value: " + this.cacheMap.get(this.key));
 
-        if (this.key == null) {
-            Assert.assertNull(retVal);
-            Assert.assertEquals(this.value, this.cacheMap.get(this.key));
+
+        if(this.expectedNull){
+            Object o = null;
+            Assert.assertEquals(o, this.cacheMap.get(this.key));
         } else {
             Assert.assertEquals(this.value, this.cacheMap.get(this.key));
-            if (this.stateOfKey == KeyType.ValidObject) {
-                Assert.assertEquals(this.existingValue, retVal);
-            }
         }
     }
 }
+
+
+    /*Object actual = this.cacheMap.put(this.key, this.value);
+
+        System.out.println("Actual: " + actual);
+        System.out.println("ExpectedNull: " + this.expectedNull);
+        System.out.println("KeyState: " + this.stateOfKey);
+        System.out.println("ValueState: " + this.stateOfValue);
+
+        if(this.expectedNull){
+            Assert.assertNull(this.cacheMap.get(this.key));
+        } else {
+            Assert.assertEquals(this.value, this.cacheMap.get(this.key));
+    }*/
