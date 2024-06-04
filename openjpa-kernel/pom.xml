@@ -306,10 +306,10 @@
                         <version>${pitest.version}</version>
                         <configuration>
                             <targetClasses>
-
+                                <param>org.apache.openjpa.util.CacheMap</param>
                             </targetClasses>
                             <targetTests>
-                                
+                                <param>org.apache.openjpa.util.CacheMapTest</param>
                             </targetTests>
                             <avoidCallsTo>
                                 <avoidCallsTo>org.slf4j</avoidCallsTo>
