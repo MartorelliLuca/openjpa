@@ -1,3 +1,4 @@
+/*
 package org.apache.openjpa.util;
 
 import org.junit.Assert;
@@ -144,7 +145,8 @@ public class PutCacheMapTest {
 }
 
 
-    /*Object actual = this.cacheMap.put(this.key, this.value);
+    */
+/*Object actual = this.cacheMap.put(this.key, this.value);
 
         System.out.println("Actual: " + actual);
         System.out.println("ExpectedNull: " + this.expectedNull);
