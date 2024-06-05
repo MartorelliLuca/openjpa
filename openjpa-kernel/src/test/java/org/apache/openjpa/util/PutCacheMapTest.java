@@ -1,5 +1,6 @@
 package org.apache.openjpa.util;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.apache.openjpa.util.utils.*;
 import org.junit.Before;
@@ -10,6 +11,9 @@ import org.junit.runners.Parameterized;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.*;
 
 @RunWith(Parameterized.class)
 public class PutCacheMapTest {
@@ -74,6 +78,10 @@ public class PutCacheMapTest {
         putEntriesList.add(new EntriesTuple(KeyType.NotExistedObject, ValueType.Null,         true, true));  //case 17
         putEntriesList.add(new EntriesTuple(KeyType.NotExistedObject, ValueType.InvalidObject,false,true));  //case 18
 
+        //PIT
+
+
+
         return putEntriesList;
     }
 
@@ -118,10 +126,16 @@ public class PutCacheMapTest {
                 break;
             case NotExistedObject:
                 this.key = new Object();
+                if(this.keyPinned) {
+                    this.cacheMap.pin(key);
+                }
                 break;
             case ExistedObject:
                 this.key = new Object();
                 cacheMap.put(this.key, this.existingValue);
+                if(this.keyPinned) {
+                    this.cacheMap.pin(key);
+                }
                 break;
         }
         switch (stateOfValue) {
@@ -140,11 +154,6 @@ public class PutCacheMapTest {
     @Test
     public void testPut() {
 
-        // Se la chiave è da pin, pinna la chiave prima di metterla nella mappa
-        if (keyPinned && key != null) {
-            cacheMap.pin(key);
-        }
-
         Object retVal = this.cacheMap.put(this.key, this.value);
 
         System.out.println("\n______________________________________________");
@@ -159,13 +168,19 @@ public class PutCacheMapTest {
             System.out.println(this.cacheMap.get(this.key) == null);
             Assert.assertNull(this.cacheMap.get(this.key));
         } else {
-            Assert.assertEquals(this.value, this.cacheMap.get(this.key));
+            assertEquals(this.value, this.cacheMap.get(this.key));
         }
 
-        // Verifica che l'elemento rimanga nella cache anche se è pin
+        // Verifica che l'elemento rimanga nella cache anche se è pinnata
         if (keyPinned && key != null) {
             Assert.assertTrue(cacheMap.getPinnedKeys().contains(key));
-            Assert.assertEquals(this.value, cacheMap.get(this.key));
+            assertEquals(this.value, cacheMap.get(this.key));
         }
     }
+
+/*    @After
+    public void cleanUpEachTime(){
+        this.cacheMap.clear();
+    }*/
+
 }

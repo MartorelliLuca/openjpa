@@ -290,46 +290,37 @@
         <!-- PIT profile -->
         <profile>
             <id>Pitest</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <properties>
-                <withHistory>true</withHistory>
-                <pitest.version>1.14.0</pitest.version>
-                <pitest.history.file>${project.build.directory}/pitest.history</pitest.history.file>
-            </properties>
+
+            <dependencies>
+                <dependency>
+                    <groupId>org.pitest</groupId>
+                    <artifactId>pitest-maven</artifactId>
+                    <version>LATEST</version>
+                </dependency>
+            </dependencies>
+
             <build>
                 <plugins>
                     <plugin>
                         <groupId>org.pitest</groupId>
                         <artifactId>pitest-maven</artifactId>
-                        <version>${pitest.version}</version>
-                        <configuration>
-                            <targetClasses>
-                                <param>org.apache.openjpa.util.CacheMap</param>
-                            </targetClasses>
-                            <targetTests>
-                                <param>org.apache.openjpa.util.CacheMapTest</param>
-                            </targetTests>
-                            <avoidCallsTo>
-                                <avoidCallsTo>org.slf4j</avoidCallsTo>
-                            </avoidCallsTo>
-                            <historyInputFile>${pitest.history.file}</historyInputFile>
-                            <historyOutputFile>${pitest.history.file}</historyOutputFile>
-                        </configuration>
                         <executions>
                             <execution>
-                                <id>PIT Report Generation</id>
-                                <phase>test</phase>
                                 <goals>
                                     <goal>mutationCoverage</goal>
                                 </goals>
+                                <phase>verify</phase>
                             </execution>
                         </executions>
+                        <configuration>
+                            <threads>4</threads>
+                            <targetClasses>
+                                <param>org.apache.openjpa.util.CacheMap</param>
+                            </targetClasses>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
         </profile>
     </profiles>
-
 </project>

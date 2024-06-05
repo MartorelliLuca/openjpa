@@ -138,7 +138,7 @@ public class CacheMap
             };
         } else {
             cacheMap = new LRUMap(size, load) {
-                
+
                 private static final long serialVersionUID = 1L;
 
                 @Override
