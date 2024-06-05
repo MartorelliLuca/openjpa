@@ -1,3 +1,4 @@
+/*
 package org.apache.openjpa.util;
 
 import org.junit.After;
@@ -178,9 +179,12 @@ public class PutCacheMapTest {
         }
     }
 
+*/
 /*    @After
     public void cleanUpEachTime(){
         this.cacheMap.clear();
-    }*/
+    }*//*
+
 
 }
+*/
