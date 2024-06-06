@@ -3,7 +3,7 @@ package org.apache.openjpa.util;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.apache.openjpa.util.utils.*;
+import org.apache.openjpa.util.objects.InvalidObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +14,6 @@ import java.util.Collection;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
 
 @RunWith(Parameterized.class)
 public class PutCacheMapTest {

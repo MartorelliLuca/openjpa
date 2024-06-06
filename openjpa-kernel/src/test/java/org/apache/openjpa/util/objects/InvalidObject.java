@@ -1,4 +1,4 @@
-package org.apache.openjpa.util.utils;
+package org.apache.openjpa.util.objects;
 
 import java.util.Random;
 

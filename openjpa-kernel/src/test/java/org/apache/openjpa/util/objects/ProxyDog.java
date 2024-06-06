@@ -1,10 +1,7 @@
-package org.apache.openjpa.util;
+package org.apache.openjpa.util.objects;
 
 import java.util.Random;
 
-/**
- * this person may not have a great sense of humor ... but is proxyable for sure though!
- */
 public class ProxyDog {
     private final Random random = new Random(System.currentTimeMillis());
     private String name;
