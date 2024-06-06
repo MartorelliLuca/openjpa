@@ -33,7 +33,7 @@ public class PutMutationKillTest {
         assertFalse(entryRemovedCalled[0]);
 
         cacheMap.put(key, value);
-
+        
         assertTrue(entryAddedCalled[0]);
         assertTrue(entryRemovedCalled[0]);
     }

@@ -1,9 +1,8 @@
-/*
 package org.apache.openjpa.util;
 
+import org.apache.openjpa.util.utils.InvalidObject;
 import org.junit.After;
 import org.junit.Assert;
-import org.apache.openjpa.util.utils.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,10 +13,9 @@ import java.util.Collection;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
 
 @RunWith(Parameterized.class)
-public class PutCacheMapTest {
+public class PutAllCacheMapTest {
 
     private CacheMap cacheMap;
 
@@ -46,7 +44,7 @@ public class PutCacheMapTest {
         InvalidObject
     }
 
-    public PutCacheMapTest(EntriesTuple entriesTuple) {
+    public PutAllCacheMapTest(EntriesTuple entriesTuple) {
         this.stateOfKey = entriesTuple.stateOfKey();
         this.keyPinned = entriesTuple.keyPinned();
         this.stateOfValue = entriesTuple.stateOfValue();
@@ -186,4 +184,3 @@ public class PutCacheMapTest {
 
 }
 
-*/
