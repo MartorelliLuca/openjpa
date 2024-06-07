@@ -315,8 +315,8 @@
                         <configuration>
                             <threads>4</threads>
                             <targetClasses>
-                                <param>org.apache.openjpa.util.CacheMap</param>
-                                <!--<param>org.apache.openjpa.util.ProxyManagerImpl</param>-->
+                                <!--<param>org.apache.openjpa.util.CacheMap</param>-->
+                                <param>org.apache.openjpa.util.ProxyManagerImpl</param>
                             </targetClasses>
                         </configuration>
                     </plugin>
