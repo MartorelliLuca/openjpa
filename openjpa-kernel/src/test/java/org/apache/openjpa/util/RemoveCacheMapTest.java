@@ -1,4 +1,3 @@
-/*
 package org.apache.openjpa.util;
 
 import org.apache.openjpa.util.objects.InvalidObject;
@@ -120,4 +119,3 @@ public class RemoveCacheMapTest {
         }
     }
 }
-*/

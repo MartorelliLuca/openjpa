@@ -1,4 +1,3 @@
-/*
 package org.apache.openjpa.util;
 
 import static org.junit.Assert.*;
@@ -76,4 +75,3 @@ public class PutMutationKillTest {
     }
 }
 
-*/

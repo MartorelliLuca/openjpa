@@ -1,4 +1,3 @@
-/*
 package org.apache.openjpa.util;
 
 import org.junit.Before;
@@ -76,4 +75,3 @@ public class RemoveMutationKillTest {
     }
 
 }
-*/
