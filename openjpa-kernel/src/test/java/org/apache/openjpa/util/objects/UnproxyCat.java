@@ -20,4 +20,12 @@ public class UnproxyCat {
                     " enters the room, my hiss tells the story!\n");
         }
     }
+
+    public long getAge() {
+        return age;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
