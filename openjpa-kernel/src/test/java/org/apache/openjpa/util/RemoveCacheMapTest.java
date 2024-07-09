@@ -21,12 +21,14 @@ public class RemoveCacheMapTest {
     private final KeyType stateOfKey;
     private final boolean keyPinned;
     private final Object existingValue = new Object();
+    private final Object softMapValue = new Object();
 
     private enum KeyType {
         Null,
         NotExistedObject,
         ExistedObject,
-        InvalidObject
+        InvalidObject,
+        SoftMapObject
     }
 
     public RemoveCacheMapTest(EntriesTuple entriesTuple) {
@@ -43,10 +45,13 @@ public class RemoveCacheMapTest {
         putEntriesList.add(new EntriesTuple(KeyType.ExistedObject,    false)); // case 4
 
         //After Jacoco and BaDua reports
-        putEntriesList.add(new EntriesTuple(KeyType.Null,             true));  // case 5
-        putEntriesList.add(new EntriesTuple(KeyType.NotExistedObject, true)); // case 6
-        putEntriesList.add(new EntriesTuple(KeyType.InvalidObject,    true)); // case 7
-        putEntriesList.add(new EntriesTuple(KeyType.ExistedObject,    true)); // case 8
+        putEntriesList.add(new EntriesTuple(KeyType.SoftMapObject,    false)); // case 5
+        putEntriesList.add(new EntriesTuple(KeyType.Null,             true));  // case 6
+        putEntriesList.add(new EntriesTuple(KeyType.NotExistedObject, true));  // case 7
+        putEntriesList.add(new EntriesTuple(KeyType.InvalidObject,    true));  // case 8
+        putEntriesList.add(new EntriesTuple(KeyType.ExistedObject,    true));  // case 9
+        putEntriesList.add(new EntriesTuple(KeyType.SoftMapObject,    true));  // case 10
+
         return putEntriesList;
     }
 
@@ -91,6 +96,13 @@ public class RemoveCacheMapTest {
                     this.cacheMap.pin(key);
                 }
                 break;
+            case SoftMapObject:
+                this.key = new Object();
+                cacheMap.softMap.put(this.key, this.softMapValue);
+                if (this.keyPinned) {
+                    this.cacheMap.pin(key);
+                }
+                break;
         }
     }
 
@@ -111,6 +123,10 @@ public class RemoveCacheMapTest {
         } else if (this.stateOfKey == KeyType.ExistedObject) {
             // Se la chiave esisteva nella mappa, la rimozione dovrebbe restituire il valore associato
             assertEquals(this.existingValue, deletedVal);
+            assertNull(this.cacheMap.get(this.key));
+        } else if (this.stateOfKey == KeyType.SoftMapObject) {
+            // Se la chiave esisteva nella soft map, la rimozione dovrebbe restituire il valore associato
+            assertEquals(this.softMapValue, deletedVal);
             assertNull(this.cacheMap.get(this.key));
         } else {
             // Se la chiave non esisteva nella mappa, la rimozione dovrebbe restituire null

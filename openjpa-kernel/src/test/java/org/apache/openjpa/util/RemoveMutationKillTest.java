@@ -1,12 +1,6 @@
 package org.apache.openjpa.util;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
-
-import java.lang.reflect.Field;
-import java.util.concurrent.locks.Lock;
-
 import static org.junit.Assert.*;
 
 public class RemoveMutationKillTest {

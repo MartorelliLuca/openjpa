@@ -273,23 +273,23 @@ public class ProxyManagerImpl
     }
 
     @Override
-    public Object copyCustom(Object orig) {
-        if (orig == null)
+    public Object copyCustom(Object orig) {   //v
+        if (orig == null)//v
             return null;
-        if (orig instanceof Proxy)
+        if (orig instanceof Proxy) //g
             return ((Proxy) orig).copy(orig);
-        if (ImplHelper.isManageable(orig))
+        if (ImplHelper.isManageable(orig))//g
             return null;
-        if (orig instanceof Collection)
+        if (orig instanceof Collection)//g
             return copyCollection((Collection) orig);
-        if (orig instanceof Map)
+        if (orig instanceof Map)//g
             return copyMap((Map) orig);
-        if (orig instanceof Date)
+        if (orig instanceof Date)//g
             return copyDate((Date) orig);
-        if (orig instanceof Calendar)
+        if (orig instanceof Calendar)//g
             return copyCalendar((Calendar) orig);
-        ProxyBean proxy = getFactoryProxyBean(orig);
-        return (proxy == null) ? null : proxy.copy(orig);
+        ProxyBean proxy = getFactoryProxyBean(orig);//v
+        return (proxy == null) ? null : proxy.copy(orig);//v
     }
 
     @Override
